@@ -8,8 +8,10 @@ const About = () => <h1>About</h1>;
 const App = () => (
   <Router>
     <div>
-      <Route path="/" component={Home} /> 
+      <Route exact path="/" component={Home} /> 
       <Route path="/about" component={About} /> 
+      <Route strict path="/about/" render={() => <h1>About 1</h1>} /> 
+      <Route path="/info" children={({ match }) => match && <h1>Info</h1>} /> 
     </div>
   </Router>
 );
