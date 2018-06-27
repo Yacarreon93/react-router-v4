@@ -47,7 +47,19 @@ const App = () => (
       <Route exact path="/" component={Home} /> 
       <Route path="/about" component={About} /> 
       <Route strict path="/contact/" render={() => <h1>Contact</h1>} /> 
-      <Route path="/info" children={({ match }) => match && <h1>Info</h1>} /> 
+      <Route path="/info" children={({ match }) => match && <h1>Info</h1>} />
+      <Route path="/page/:page?/:subpage?" render={({ match }) => (
+        <h1>
+          PAGE: {match.params.page || 'home'}<br />
+          SUBPAGE: {match.params.subpage}
+        </h1>
+      )} /> 
+      <Route path="/page2/:page?-:subpage?" render={({ match }) => (
+        <h1>
+          PAGE: {match.params.page || 'home'}<br />
+          SUBPAGE: {match.params.subpage}
+        </h1>
+      )} /> 
     </div>
   </Router>
 );
