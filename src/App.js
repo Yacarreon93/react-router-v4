@@ -5,9 +5,12 @@ import {
   Link,
   NavLink,
   Switch,
+  Redirect,
 } from 'react-router-dom';
 
 import './App.css';
+
+const loggedIn = false;
 
 const isActiveFunc = (match, location) => {
   console.log(match, location);
@@ -58,6 +61,9 @@ const NavLinks = () => (
     <NavLink to="/notfound">Not found</NavLink>
     <NavLink to="/multi/example">Multiple</NavLink>
     <NavLink to="/menu">Menu</NavLink>
+    <Link to="/old/123">Old</Link>
+    <Link to="/new/456">New</Link>
+    <Link to="/protected">Protected</Link>
   </nav>
 );
 
@@ -118,6 +124,14 @@ const App = () => (
           </div>
         )} />
         <Route path="/menu" component={Menu} />
+        <Route path="/new/:str" render={({ match }) => <h1>New: {match.params.str}</h1>} />
+        <Route path="/old/:str" render={({ match }) => <Redirect to={`/new/${match.params.str}`} />} />
+        <Route path="/protected" render={() => (
+          loggedIn ?
+          <h1>Welcome to the protected page</h1> :
+          <Redirect to="/new/login" />
+        )} />
+        {/* <Redirect from="/old" to="/new" /> */}
         <Route render={() => <h1>Page not found</h1>} />
       </Switch>
       <Header />
