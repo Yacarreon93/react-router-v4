@@ -28,6 +28,8 @@ const NavLinks = () => (
     >
       About Sub
     </NavLink>
+    <NavLink to="/query/?id=123">Query</NavLink>
+    <NavLink to={{ pathname: '/query',  search: '?id=456' }}>Pathname</NavLink>
   </nav>
 );
 
@@ -77,6 +79,14 @@ const App = () => (
           Param A: {match.params.a}<br />
           Param B: {match.params.b}
         </h1>
+      )} />
+      <Route path="/query" render={({ match, location }) => (
+        <div>
+          <p>root</p>
+          <p>{JSON.stringify(match)}</p>
+          <p>{JSON.stringify(location)}</p>
+          <p>{new URLSearchParams(location.search).get('id')}</p>
+        </div>
       )} />
     </div>
   </Router>
