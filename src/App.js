@@ -4,6 +4,7 @@ import {
   Route,
   Link,
   NavLink,
+  Switch,
 } from 'react-router-dom';
 
 import './App.css';
@@ -30,6 +31,7 @@ const NavLinks = () => (
     </NavLink>
     <NavLink to="/query/?id=123">Query</NavLink>
     <NavLink to={{ pathname: '/query',  search: '?id=456' }}>Pathname</NavLink>
+    <NavLink to="/notfound">Not found</NavLink>
   </nav>
 );
 
@@ -46,48 +48,51 @@ const App = () => (
   <Router>
     <div>
       <NavLinks />
-      <Route exact path="/" component={Home} /> 
-      <Route path="/about" component={About} /> 
-      <Route strict path="/contact/" render={() => <h1>Contact</h1>} /> 
-      <Route path="/info" children={({ match }) => match && <h1>Info</h1>} />
-      <Route path="/page/:page?/:subpage?" render={({ match }) => (
-        <h1>
-          PAGE: {match.params.page || 'home'}<br />
-          SUBPAGE: {match.params.subpage}
-        </h1>
-      )} /> 
-      <Route path="/page2/:page?-:subpage?" render={({ match }) => (
-        <h1>
-          PAGE: {match.params.page || 'home'}<br />
-          SUBPAGE: {match.params.subpage}
-        </h1>
-      )} />
-      <Route path="/:a(\d+)/:b" render={({ match }) => (
-        <h1>
-          Param A: {match.params.a}<br />
-          Param B: {match.params.b}
-        </h1>
-      )} />
-      <Route path="/:a(\d{2}-\d{2}-\d{4})/:b" render={({ match }) => (
-        <h1>
-          Param A: {match.params.a}<br />
-          Param B: {match.params.b}
-        </h1>
-      )} />
-      <Route path="/:a(\d{2}-\d{2}-\d{4}):b(\.[a-z]+)?" render={({ match }) => (
-        <h1>
-          Param A: {match.params.a}<br />
-          Param B: {match.params.b}
-        </h1>
-      )} />
-      <Route path="/query" render={({ match, location }) => (
-        <div>
-          <p>root</p>
-          <p>{JSON.stringify(match)}</p>
-          <p>{JSON.stringify(location)}</p>
-          <p>{new URLSearchParams(location.search).get('id')}</p>
-        </div>
-      )} />
+      <Switch>
+        <Route exact path="/" component={Home} /> 
+        <Route path="/about" component={About} /> 
+        <Route strict path="/contact/" render={() => <h1>Contact</h1>} /> 
+        <Route path="/info" children={({ match }) => match && <h1>Info</h1>} />
+        <Route path="/page/:page?/:subpage?" render={({ match }) => (
+          <h1>
+            PAGE: {match.params.page || 'home'}<br />
+            SUBPAGE: {match.params.subpage}
+          </h1>
+        )} /> 
+        <Route path="/page2/:page?-:subpage?" render={({ match }) => (
+          <h1>
+            PAGE: {match.params.page || 'home'}<br />
+            SUBPAGE: {match.params.subpage}
+          </h1>
+        )} />
+        <Route path="/:a(\d+)/:b" render={({ match }) => (
+          <h1>
+            Param A: {match.params.a}<br />
+            Param B: {match.params.b}
+          </h1>
+        )} />
+        <Route path="/:a(\d{2}-\d{2}-\d{4})/:b" render={({ match }) => (
+          <h1>
+            Param A: {match.params.a}<br />
+            Param B: {match.params.b}
+          </h1>
+        )} />
+        <Route path="/:a(\d{2}-\d{2}-\d{4}):b(\.[a-z]+)?" render={({ match }) => (
+          <h1>
+            Param A: {match.params.a}<br />
+            Param B: {match.params.b}
+          </h1>
+        )} />
+        <Route path="/query" render={({ match, location }) => (
+          <div>
+            <p>root</p>
+            <p>{JSON.stringify(match)}</p>
+            <p>{JSON.stringify(location)}</p>
+            <p>{new URLSearchParams(location.search).get('id')}</p>
+          </div>
+        )} />
+        <Route render={() => <h1>Page not found</h1>} />
+      </Switch>
     </div>
   </Router>
 );
