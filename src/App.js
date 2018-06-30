@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { 
   BrowserRouter as Router, 
   Route,
@@ -6,6 +6,7 @@ import {
   NavLink,
   Switch,
   Redirect,
+  Prompt,
 } from 'react-router-dom';
 
 import './App.css';
@@ -32,6 +33,25 @@ const Body = ({ match }) => (
     <Route path="/multi/:param" render={() => <h1>Body</h1>} />
   </div>
 );
+
+class Form extends Component {
+  state = { dirty: false };
+
+  setDirty = () => { this.setState({ dirty: true }) }
+
+  render() {
+    return (
+      <div>
+        <h1>Form</h1>
+        <input onInput={this.setDirty} />
+        <Prompt
+          when={this.state.dirty}
+          message="Data will be lost!"
+        />
+      </div>
+    );
+  }
+}
 
 const Menu = () => (
   <div>
@@ -64,6 +84,7 @@ const NavLinks = () => (
     <Link to="/old/123">Old</Link>
     <Link to="/new/456">New</Link>
     <Link to="/protected">Protected</Link>
+    <Link to="/prompt">Prompt</Link>
   </nav>
 );
 
@@ -132,6 +153,7 @@ const App = () => (
           <Redirect to="/new/login" />
         )} />
         {/* <Redirect from="/old" to="/new" /> */}
+        <Route path="/prompt" component={Form} />
         <Route render={() => <h1>Page not found</h1>} />
       </Switch>
       <Header />
