@@ -59,7 +59,25 @@ const App = () => (
           PAGE: {match.params.page || 'home'}<br />
           SUBPAGE: {match.params.subpage}
         </h1>
-      )} /> 
+      )} />
+      <Route path="/:a(\d+)/:b" render={({ match }) => (
+        <h1>
+          Param A: {match.params.a}<br />
+          Param B: {match.params.b}
+        </h1>
+      )} />
+      <Route path="/:a(\d{2}-\d{2}-\d{4})/:b" render={({ match }) => (
+        <h1>
+          Param A: {match.params.a}<br />
+          Param B: {match.params.b}
+        </h1>
+      )} />
+      <Route path="/:a(\d{2}-\d{2}-\d{4}):b(\.[a-z]+)?" render={({ match }) => (
+        <h1>
+          Param A: {match.params.a}<br />
+          Param B: {match.params.b}
+        </h1>
+      )} />
     </div>
   </Router>
 );
