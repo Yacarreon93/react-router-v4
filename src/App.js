@@ -18,6 +18,18 @@ const Home = () => <h1>Home</h1>;
 
 const About = () => <h1>About</h1>;
 
+const Header = ({ match }) => (
+  <div className="header">
+    <Route path="/multi/:param" render={() => <h1>Header</h1>} />
+  </div>
+);
+
+const Body = ({ match }) => (
+  <div className="body">
+    <Route path="/multi/:param" render={() => <h1>Body</h1>} />
+  </div>
+);
+
 const NavLinks = () => (
   <nav>
     <NavLink exact activeClassName="active" to="/">Home</NavLink>
@@ -32,6 +44,7 @@ const NavLinks = () => (
     <NavLink to="/query/?id=123">Query</NavLink>
     <NavLink to={{ pathname: '/query',  search: '?id=456' }}>Pathname</NavLink>
     <NavLink to="/notfound">Not found</NavLink>
+    <NavLink to="/multi/example">Multiple</NavLink>
   </nav>
 );
 
@@ -93,6 +106,8 @@ const App = () => (
         )} />
         <Route render={() => <h1>Page not found</h1>} />
       </Switch>
+      <Header />
+      <Body />
     </div>
   </Router>
 );
