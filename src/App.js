@@ -30,6 +30,18 @@ const Body = ({ match }) => (
   </div>
 );
 
+const Menu = () => (
+  <div>
+    <h1>Menu</h1>
+    <Link to="/menu/sub1">Sub 1</Link>
+    <Link to="/menu/sub2">Sub 2</Link>
+    <Link to="/menu/sub3">Sub 3</Link>
+    <Route path="/menu/:subitem" render={({ match }) => {
+      return <h2>{match.params.subitem}</h2>
+    }} />
+  </div>
+);
+
 const NavLinks = () => (
   <nav>
     <NavLink exact activeClassName="active" to="/">Home</NavLink>
@@ -45,6 +57,7 @@ const NavLinks = () => (
     <NavLink to={{ pathname: '/query',  search: '?id=456' }}>Pathname</NavLink>
     <NavLink to="/notfound">Not found</NavLink>
     <NavLink to="/multi/example">Multiple</NavLink>
+    <NavLink to="/menu">Menu</NavLink>
   </nav>
 );
 
@@ -104,6 +117,7 @@ const App = () => (
             <p>{new URLSearchParams(location.search).get('id')}</p>
           </div>
         )} />
+        <Route path="/menu" component={Menu} />
         <Route render={() => <h1>Page not found</h1>} />
       </Switch>
       <Header />
